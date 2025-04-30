@@ -7,11 +7,10 @@
 		"url": "git@github.com:treefarmstudio/odyssey-theme"
 	},
 	"scripts": {
-		"dev": "astro dev",
-		"start": "astro dev",
-		"build": "astro build",
-		"preview": "astro preview",
-		"format": "npx prettier -w ."
+	"dev": "astro dev",
+	"build": "astro build",
+	"preview": "astro preview",
+	"postinstall": "prisma generate"
 	},
 	"devDependencies": {
 		"@astrojs/lit": "^4.0.1",
