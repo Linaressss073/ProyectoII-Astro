@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./Database.db"
+}
+
+model Usuario {
+  id_usuario     Int       @id @default(autoincrement())
+  nombre_usuario String
+  clave          String
+  rol            String
+
+  pedidos        Pedido[]
+}
+
+model Cliente {
+  id_cliente     Int       @id @default(autoincrement())
+  nombre         String
+  documento      String    @unique
+  correo         String
+  telefono       String
+
+  reservas       Reserva[]
+  pasadias       Pasadia[]
+  pedidos        Pedido[]
+  facturas       Factura[]
+  eventos        Evento[]
+}
+
+model Cabana {
+  id_cabana      Int       @id @default(autoincrement())
+  nombre         String
+  estado         String
+
+  hospedajes     Hospedaje[]
+}
+
+model Reserva {
+  id_reserva        Int        @id @default(autoincrement())
+  id_cliente        Int
+  fecha_reserva     DateTime
+  numero_adultos    Int
+  numero_ninos      Int
+  dias_hospedaje    Int
+  porcentaje_pagado Float
+  medio_pago        String
+  estado            String
+
+  cliente           Cliente    @relation(fields: [id_cliente], references: [id_cliente])
+  hospedajes        Hospedaje[]
+}
+
+model Hospedaje {
+  id_hospedaje   Int      @id @default(autoincrement())
+  id_reserva     Int
+  id_cabana      Int
+  fecha_inicio   String
+  fecha_fin      String
+  estado         String
+
+  reserva        Reserva  @relation(fields: [id_reserva], references: [id_reserva])
+  cabana         Cabana   @relation(fields: [id_cabana], references: [id_cabana])
+}
+
+model Pasadia {
+  id_pasadia        Int     @id @default(autoincrement())
+  id_cliente        Int
+  fecha             String
+  incluye_almuerzo  Boolean
+
+  cliente           Cliente @relation(fields: [id_cliente], references: [id_cliente])
+}
+
+model Servicio {
+  id_servicio   Int             @id @default(autoincrement())
+  nombre        String
+  tipo          String
+  precio        Float
+
+  detalles      DetallePedido[]
+}
+
+model Pedido {
+  id_pedido     Int        @id @default(autoincrement())
+  id_cliente    Int
+  id_usuario    Int
+  fecha         DateTime
+  tipo_pedido   String
+
+  cliente       Cliente    @relation(fields: [id_cliente], references: [id_cliente])
+  usuario       Usuario    @relation(fields: [id_usuario], references: [id_usuario])
+  detalles      DetallePedido[]
+}
+
+model DetallePedido {
+  id_detalle     Int       @id @default(autoincrement())
+  id_pedido      Int
+  id_servicio    Int
+  cantidad       Int
+  subtotal       Float
+
+  pedido         Pedido    @relation(fields: [id_pedido], references: [id_pedido])
+  servicio       Servicio  @relation(fields: [id_servicio], references: [id_servicio])
+}
+
+model Factura {
+  id_factura     Int      @id @default(autoincrement())
+  id_cliente     Int
+  fecha          DateTime
+  total          Float
+  metodo_pago    String
+
+  cliente        Cliente  @relation(fields: [id_cliente], references: [id_cliente])
+  pagos          Pago[]
+}
+
+model Pago {
+  id_pago        Int       @id @default(autoincrement())
+  id_factura     Int
+  monto          Float
+  metodo_pago    String
+  fecha_pago     DateTime
+
+  factura        Factura   @relation(fields: [id_factura], references: [id_factura])
+}
+
+model Evento {
+  id_evento      Int     @id @default(autoincrement())
+  nombre         String
+  tipo           String
+  fecha_inicio   String
+  fecha_fin      String
+  detalle        String
+  alquilado_por  Int
+
+  cliente        Cliente @relation(fields: [alquilado_por], references: [id_cliente])
+}
+
