@@ -9,8 +9,7 @@
 	"scripts": {
 	"dev": "astro dev",
 	"build": "astro build",
-	"preview": "astro preview",
-	"postinstall": "prisma generate"
+	"preview": "astro preview"
 	},
 	"devDependencies": {
 		"@astrojs/lit": "^4.0.1",
@@ -26,5 +25,7 @@
 		"prettier-plugin-astro": "^0.0.12"
 	},
 	"dependencies": {
+		"@prisma/client": "^6.7.0",
+		"prisma": "^6.7.0"
 	}
 }
