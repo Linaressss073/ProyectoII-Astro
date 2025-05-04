@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Page.astro';
+
+import { alimentacionIcon, bioparqueIcon, fuentesIcon, horariosIcon, lockersIcon, parqueaderoIcon, transporteIcon } from '../icons/icons.js';
+
+const seo = {
+  title: 'Pasadías | Hotel Paraíso',
+  description: 'Vive un día inolvidable con todas las comodidades en Hotel Paraíso.',
+};
+
+export const serviciosPasadia = [
+  {
+    titulo: 'Transporte Ida y Regreso',
+    icono: transporteIcon,
+    link: '/servicios/transporte',
+  },
+  {
+    titulo: 'Alimentación',
+    icono: alimentacionIcon,
+    link: '/servicios/alimentacion',
+  },
+  {
+    titulo: 'Bioparque',
+    icono: bioparqueIcon,
+    link: '/servicios/bioparque',
+  },
+  {
+    titulo: 'Fuentes de Soda',
+    icono: fuentesIcon,
+    link: '/servicios/fuentes',
+  },
+  {
+    titulo: 'Parqueadero',
+    icono: parqueaderoIcon,
+    link: '/servicios/parqueadero',
+  },
+  {
+    titulo: 'Lockers',
+    icono: lockersIcon,
+    link: '/servicios/lockers',
+  },
+  {
+    titulo: 'Horarios e Información',
+    icono: horariosIcon,
+    link: '/servicios/horarios',
+  },
+];
+
+---
+
+<Layout {seo}>
+  <section class="py-10 px-6 text-center">
+    <h1 class="text-4xl font-bold mb-4">Pasadías en Hotel Paraíso</h1>
+    <p class="text-lg mb-10 max-w-2xl mx-auto">
+      Relájate y disfruta de un día completo con acceso a todas nuestras instalaciones. Todo está listo para que vivas una experiencia inolvidable.
+    </p>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 place-items-center">
+      {serviciosPasadia.map(({ titulo, icono, link }) => (
+        <div class="bg-amber-50 p-4 rounded-xl shadow hover:shadow-md transition w-full text-center max-w-[180px]">
+          <img src={icono} alt={titulo} class="mx-auto h-12 mb-3" />
+          <h3 class="font-semibold text-sm">{titulo}</h3>
+          <a href={link} class="text-blue-600 text-sm mt-2 block hover:underline">Más info</a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-gray-100 py-10 mt-12 text-center">
+    <h2 class="text-2xl font-bold mb-4">Reserva tu Pasadía</h2>
+    <p class="mb-4">¿Listo para visitarnos? Reserva en línea o contáctanos directamente.</p>
+    <a href="/reservar" class="bg-green-600 text-white px-6 py-2 rounded-xl hover:bg-green-700 transition">
+      Reservar ahora
+    </a>
+  </section>
+</Layout>
