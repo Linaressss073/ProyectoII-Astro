@@ -5,6 +5,17 @@ import Plug from './Plug.astro';
 
 const { footerSocials, footerLists, copyrightName, background, color, showPlug: showPlug = true } =
   Astro.props;
+
+// Helper function to sanitize URLs
+const sanitizeUrl = (url) => {
+  try {
+    const sanitizedUrl = new URL(url, 'https://example.com'); // Base URL for relative paths
+    return sanitizedUrl.pathname + sanitizedUrl.search + sanitizedUrl.hash;
+  } catch (e) {
+    console.error('Invalid URL:', url);
+    return '#'; // Fallback to a safe value
+  }
+};
 ---
 
 <footer
@@ -22,13 +33,13 @@ const { footerSocials, footerLists, copyrightName, background, color, showPlug: 
         
       </div>
       {
-        footerLists.map((list) => (
+        footerLists?.map((list) => (
           <div>
             <p><strong>{list.title}</strong></p>
             <ul class="footer-link__list">
               {list.items.map((item) => (
                 <li>
-                  <a href={item.slug}>{item.title}</a>
+                  <a href={sanitizeUrl(item.slug)}>{item.title}</a>
                 </li>
               ))}
             </ul>
